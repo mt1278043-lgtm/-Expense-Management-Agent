@@ -1,86 +1,79 @@
 # 💳 Expense Management Agent
 
-An intelligent expense tracking and analysis application powered by Streamlit and OpenAI's GPT models.
+AI agent that helps employees and finance teams manage expense reports: it loads
+expense entries, categorizes spending, checks policy compliance with an LLM, and
+prepares a reimbursement/audit summary — all in an interactive Streamlit app.
 
-## Features
+## Lab Objectives
 
-- 📊 Expense tracking and visualization
-- 🤖 AI-powered expense analysis using GPT
-- 💰 Category-based spending breakdown
-- 🔍 Intelligent recommendations for cost optimization
-- 📂 Easy-to-use Streamlit interface
+- Simulate a dataset of employee expenses
+- Automatically categorize and validate expenses
+- Use GPT to summarize policy compliance and suggest actions
+- Display everything in an interactive Streamlit app
 
-## Prerequisites
+## Tech Stack
 
-- Python 3.8 or higher
-- OpenAI API key
+- Python
+- Pandas
+- OpenAI GPT-4 / GPT-3.5
+- LangChain
+- LangGraph
+- Streamlit
 
-## Installation
+## Project Structure
 
-1. Clone the repository:
-```bash
-git clone https://github.com/mt1278043-lgtm/-Expense-Management-Agent.git
-cd -Expense-Management-Agent
-```
+| File                | Purpose                                                        |
+| ------------------- | ------------------------------------------------------------- |
+| `expense_data.py`   | Simulated mock expense dataset (Pandas DataFrame)            |
+| `expense_prompt.py` | LangChain `PromptTemplate` for the compliance auditor        |
+| `expense_agent.py`  | Loads data, formats the prompt, calls the LLM                |
+| `app.py`            | Streamlit UI — "Audit My Expenses" button                    |
+| `requirements.txt`  | Python dependencies                                          |
 
-2. Create a virtual environment:
+## Setup
+
 ```bash
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
+# Windows
+venv\Scripts\activate
+# macOS / Linux
+source venv/bin/activate
 
-3. Install dependencies:
-```bash
 pip install -r requirements.txt
 ```
 
-4. Set up environment variables:
+Set your OpenAI key (copy `.env.example` to `.env`, or export it):
+
 ```bash
-cp .env.example .env
-# Edit .env and add your OpenAI API key
+export OPENAI_API_KEY="sk-..."      # macOS / Linux
+setx OPENAI_API_KEY "sk-..."        # Windows (new shell after)
 ```
 
-## Usage
+## Run
 
-Run the Streamlit app:
 ```bash
 streamlit run app.py
 ```
 
-The app will open in your default browser at `http://localhost:8501`
+Click **Audit My Expenses** to see the expense table and the GPT compliance review.
 
-Click "Audit My Expenses" to:
-1. View your expense data in a formatted table
-2. Get AI-powered analysis and recommendations
+## Policy Limits Checked
 
-## Project Structure
+- Travel > $500
+- Meals > $100
+- Training > $1000
 
-```
-.
-├── app.py                 # Main Streamlit application
-├── expense_agent.py       # Core expense analysis logic
-├── expense_data.py        # Expense data loading
-├── expense_prompt.py      # GPT prompt templates
-├── requirements.txt       # Python dependencies
-├── .env.example          # Environment variables template
-├── .gitignore            # Git ignore rules
-└── README.md             # This file
-```
-
-## Configuration
-
-### Environment Variables
-
-Create a `.env` file based on `.env.example`:
+## Example Output
 
 ```
-OPENAI_API_KEY=your-api-key-here
+The submitted expense report contains two items that exceed standard policy limits:
+
+- "Flight to NYC" at $450 is within limits.
+- "Hotel Stay" at $600 is acceptable.
+- "Team Dinner" at $180 exceeds the $100 meal limit and should be reviewed.
+- "Conference Fee" at $1200 exceeds the $1000 training cap.
+
+Recommendations:
+- Request itemized receipt for dinner.
+- Validate conference details for policy exceptions.
 ```
-
-## Contributing
-
-Feel free to submit issues and enhancement requests!
-
-## License
-
-MIT License

@@ -1,11 +1,17 @@
-expense_prompt = """
-Analyze the following expense report and provide insights:
+from langchain.prompts import PromptTemplate
+
+expense_prompt = PromptTemplate.from_template("""
+You are an AI expense compliance auditor.
+
+Below is a list of expenses submitted by an employee:
 
 {expense_table}
 
-Please provide:
-1. Total spending breakdown by category
-2. Highest and lowest spending items
-3. Recommendations for cost optimization
-4. Any suspicious or unusual spending patterns
-"""
+Tasks:
+1. Check if any items exceed reasonable expense policy limits.
+   - Travel > $500
+   - Meals > $100
+   - Training > $1000
+2. Suggest which items should be reviewed or flagged.
+3. Provide a summary for the finance team.
+""")
